@@ -1,0 +1,4 @@
+python_embeded/
+__pycache__/
+.idea
+data/result/

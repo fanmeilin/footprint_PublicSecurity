@@ -1,0 +1,27 @@
+2 ICON "icon.ico"
+1 VERSIONINFO
+	FILEVERSION     2,3,3,3
+	PRODUCTVERSION  2,3,3,3
+	FILEOS 0x4L
+	BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "080404E4"
+		BEGIN
+		VALUE "CompanyName", "hust"
+		VALUE "FileDescription", "Project General Launcher"
+		VALUE "FileVersion", "1.0"
+		VALUE "InternalName", "Launcher on Windows"
+		VALUE "LegalCopyright", "GPLv2"
+		VALUE "OriginalFilename", "足迹矫正"
+		VALUE "ProductName", "足迹矫正与标注"
+		VALUE "ProductVersion", "2.3.3 build 42"
+		VALUE "Comments", "足迹矫正"
+		END
+	END
+	
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x0804, 1252
+	END
+	END
