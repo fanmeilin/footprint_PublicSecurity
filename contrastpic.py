@@ -33,16 +33,7 @@ class MyLabel(QLabel): #继承QLabel类
     line = False
     angle = False
     aflag = False
-    base = Tk()
-    # screen's length and width in pixels and mm
-    length_1 = base.winfo_screenheight()
-    width_1 = base.winfo_screenwidth()
-    length_2 = base.winfo_screenmmheight()
-    width_2 = base.winfo_screenmmwidth()
-    width_ppn = width_1 / width_2
-    length_ppn = length_1 / length_2
-    ppn = round((width_ppn + length_ppn) / 2, 2)
-    radio = ppn
+
     # drawable = False
 
     def __init__(self,linecolor,anglecolor,Parent=None):
@@ -50,6 +41,16 @@ class MyLabel(QLabel): #继承QLabel类
         self.setMouseTracking(True)
         self.linecolor = linecolor
         self.anglecolor = anglecolor
+        base = Tk()
+        # screen's length and width in pixels and mm
+        length_1 = base.winfo_screenheight()
+        width_1 = base.winfo_screenwidth()
+        length_2 = base.winfo_screenmmheight()
+        width_2 = base.winfo_screenmmwidth()
+        width_ppn = width_1 / width_2
+        length_ppn = length_1 / length_2
+        ppn = round((width_ppn + length_ppn) / 2, 2)
+        self.ratio = ppn
 
     # 初始化画布
     def initDrawing(self, img, img_width, img_height):
@@ -180,8 +181,8 @@ class MyLabel(QLabel): #继承QLabel类
         painter.setFont(font)
         # 画预设图例
         painter.setPen(QPen(Qt.darkBlue, 1.5, Qt.SolidLine))  # 设置笔的属性
-        painter.drawLine(1255-40,60,1255-int(40+self.radio*10),60)  # 绘制预设的1cm图示
-        painter.drawText(1255-int(40+self.radio*10),50,'10mm')
+        painter.drawLine(1255-40,60,1255-int(40+self.ratio*10),60)  # 绘制预设的1cm图示
+        painter.drawText(1255-int(40+self.ratio*10),50,'10mm')
 
         if (self.aflag == True or self.flag==True) and not((self.x0==0 and self.y0==0) or (self.x1==0 and self.y1==0)):  # aflag为True时
             if self.flag:
@@ -200,8 +201,8 @@ class MyLabel(QLabel): #继承QLabel类
                 pre = point
             if len(data)==2:
                 # 中心坐标处显示长度
-                x = (data[0][0] - data[1][0]) / self.radio
-                y = (data[0][1] - data[1][1]) / self.radio
+                x = (data[0][0] - data[1][0]) / self.ratio
+                y = (data[0][1] - data[1][1]) / self.ratio
                 length = round((x ** 2 + y ** 2) ** 0.5, 1)
                 if abs(data[1][0] - data[0][0])<30 :
                     painter.drawText(int(22+max(data[1][0],data[0][0])),
@@ -260,7 +261,7 @@ class Ui_Form(object):
         self.anglecolor = QColor(Qt.yellow)
         self.lab = MyLabel(linecolor = self.linecolor,anglecolor=self.anglecolor)
         self.lab.setFixedSize(self.img_width, self.img_height)
-
+        self.ratio = self.lab.ratio
         # self.verticalLayout.addWidget(self.widget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout.addWidget(self.lab, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
 
@@ -406,8 +407,8 @@ class Ui_Form(object):
             self.reply = QMessageBox.information(self, "错误","请选择一张图片文件！")
             self.pic_path = temp_pic_path
             return
-        img_width = 331*self.lab.radio
-        img_height = 181*self.lab.radio
+        img_width = 331*self.ratio
+        img_height = 181*self.ratio
         # 载入图片
         Qimage = QImage()
         Qimage.load(str(self.pic_path[0]))
@@ -421,13 +422,14 @@ class Ui_Form(object):
         self.lab.setPixmap(pic_image)
         self.lab.initDrawing(pic_image,img_width, img_height)
         self.lab.setMinimumSize(img_width, img_height)
+        self.lab.ratio = self.ratio
 
     def getTwoImage(self):
         temp_pic_path = self.pic_path
         self.pic_path = QFileDialog.getOpenFileNames(None, "请选择图片路径", os.path.join(self.filepath,'revise_result'))
         self.pic_path = self.pic_path[0]
-        img_width = int((99*2)*self.lab.radio)
-        img_height = int(181*self.lab.radio)
+        img_width = int((99*2)*self.ratio)
+        img_height = int(181*self.ratio)
         if len(self.pic_path) != 2:
             self.reply = QMessageBox.information(self, "错误","请选择两张图片文件！")
             self.pic_path = temp_pic_path
@@ -448,15 +450,16 @@ class Ui_Form(object):
         paint.drawImage(QRect(0,0,half_width,img_height), Qimage0)
         paint.drawImage(QRect(half_width,0,half_width,img_height), Qimage1)
         paint.end()
-        print(Qimage.height(), Qimage.width())
+        # print(Qimage.height(), Qimage.width())
         # paint.drawPixmap(0, 0, QPixmap.fromImage(Qimage0).scaled(img_width/2, img_height))
         # paint.drawPixmap(int(img_width/2), 0, QPixmap.fromImage(Qimage1).scaled(img_width/2, img_height))
         # 创建QPixmap
         pic_image = QPixmap.fromImage(Qimage).scaled(img_width, img_height)
-        print(pic_image.height(), pic_image.width())
+        # print(pic_image.height(), pic_image.width())
         self.lab.setPixmap(pic_image)
         self.lab.initDrawing(pic_image,img_width, img_height)
         self.lab.setMinimumSize(img_width, img_height)
+        self.lab.ratio = img_height/331 #修改lab的ratio 高度的像素值和真实值的比值
 
     def saveImage(self):
         import os

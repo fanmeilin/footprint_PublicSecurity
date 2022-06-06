@@ -33,16 +33,6 @@ class MyLabel(QLabel): #继承QLabel类
     line = False
     angle = False
     aflag = False
-    base = Tk()
-    # screen's length and width in pixels and mm
-    length_1 = base.winfo_screenheight()
-    width_1 = base.winfo_screenwidth()
-    length_2 = base.winfo_screenmmheight()
-    width_2 = base.winfo_screenmmwidth()
-    width_ppn = width_1 / width_2
-    length_ppn = length_1 / length_2
-    ppn = round((width_ppn + length_ppn) / 2, 2)
-    radio = ppn
     # drawable = False
 
     def __init__(self,linecolor,anglecolor,Parent=None):
@@ -50,6 +40,16 @@ class MyLabel(QLabel): #继承QLabel类
         self.setMouseTracking(True)
         self.linecolor = linecolor
         self.anglecolor = anglecolor
+        base = Tk()
+        # screen's length and width in pixels and mm
+        length_1 = base.winfo_screenheight()
+        width_1 = base.winfo_screenwidth()
+        length_2 = base.winfo_screenmmheight()
+        width_2 = base.winfo_screenmmwidth()
+        width_ppn = width_1 / width_2
+        length_ppn = length_1 / length_2
+        ppn = round((width_ppn + length_ppn) / 2, 2)
+        self.radio = ppn
 
     # 初始化画布
     def initDrawing(self, img, img_width, img_height):

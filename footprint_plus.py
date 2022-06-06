@@ -223,7 +223,7 @@ class Ui_Form(object):
         self.doubleSpinBox.setAlignment(QtCore.Qt.AlignCenter)
         self.doubleSpinBox.setDecimals(2)
         self.doubleSpinBox.setMinimum(0.25)
-        self.doubleSpinBox.setMaximum(1.0)
+        self.doubleSpinBox.setMaximum(3.0)
         self.doubleSpinBox.setSingleStep(0.25)
         self.doubleSpinBox.setProperty("value", 1.0)
         self.doubleSpinBox.setObjectName("doubleSpinBox")
@@ -301,7 +301,7 @@ class Ui_Form(object):
         self.doubleSpinBox_2.setMinimumSize(QtCore.QSize(120, 20))
         self.doubleSpinBox_2.setAlignment(QtCore.Qt.AlignCenter)
         self.doubleSpinBox_2.setMinimum(0.25)
-        self.doubleSpinBox_2.setMaximum(2.0)
+        self.doubleSpinBox_2.setMaximum(3.0)
         self.doubleSpinBox_2.setSingleStep(0.25)
         self.doubleSpinBox_2.setProperty("value", 1.0)
         self.doubleSpinBox_2.setObjectName("doubleSpinBox_2")
@@ -419,7 +419,7 @@ class Ui_Form(object):
         self.demo = newWnd(self.save_dir)
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "公安足迹校正识别系统"))
+        Form.setWindowTitle(_translate("Form", "物证等大还原与矫正测量工具软件"))
         self.groupBox.setTitle(_translate("Form", "展示图"))
         self.label_3.setText(_translate("Form", "原图"))
         self.label_5.setText(_translate("Form", "矫正结果"))

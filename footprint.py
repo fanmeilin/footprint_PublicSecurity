@@ -382,7 +382,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "公安足迹校正识别系统"))
+        Form.setWindowTitle(_translate("Form", "物证等大还原与矫正测量工具软件"))
         self.groupBox.setTitle(_translate("Form", "展示图"))
         self.label_3.setText(_translate("Form", "原图"))
         self.label_5.setText(_translate("Form", "矫正结果"))
